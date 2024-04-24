@@ -89,6 +89,8 @@ function DBRecovery() {
         }
         if (resp.result != 0) return resp;    
 
+        me.refreshEnvs();
+        
         return {
             result: !isRestore ? 200 : RESTORE_SUCCESS,
             type: SUCCESS
@@ -97,13 +99,19 @@ function DBRecovery() {
     };
 
     me.refreshEnvs = function() {
+        var actions = [];
         envNames = me.getEnvNames();
-        
         for (let i = 0, n = envNames.length; i < n; i++) {
-            envName = envNames[i]; 
-
-            if (resp.result != 0) return resp;
+            envName = envNames[i];
+            actions.push({
+                envName: envNames[i],
+                jps: {
+                    type: "update",
+                    name: "Environment refresh"
+                }
+            });
         }
+        return { result: 0, onAfterReturn: { 'marketplace.jps.install': actions } };
     }
     
     me.defineEnvs = function(envName) {
