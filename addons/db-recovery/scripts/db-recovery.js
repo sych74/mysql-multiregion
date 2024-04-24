@@ -46,8 +46,8 @@ function DBRecovery() {
         resp = me.parseResponse(resp.responses);
         if (resp.result == UNABLE_RESTORE_CODE || resp.result == MYISAM_ERROR) return resp;
 
-        log("refreshEnvs000000->");
-        me.refreshEnvs();
+        resp = me.refreshEnvs();
+        if (resp.result != 0) return resp;
         
         if (isRestore) {
             let failedPrimaries = me.getFailedPrimaries();
@@ -84,8 +84,6 @@ function DBRecovery() {
             
         } else {
             if (me.getEvent() && me.getAction()) {
-                log("refreshEnvs1111111->");
-                me.refreshEnvs();
                 return {
                     result: 0,
                     errors: resp.result == FAILED_CLUSTER_CODE ? true : false
@@ -93,8 +91,6 @@ function DBRecovery() {
             }
         }
         if (resp.result != 0) return resp;    
-        log("refreshEnvs2222222->");
-        me.refreshEnvs();
         
         return {
             result: !isRestore ? 200 : RESTORE_SUCCESS,
@@ -106,12 +102,10 @@ function DBRecovery() {
     me.refreshEnvs = function() {
         var actions = [], resp;
         envNames = me.getEnvNames();
-        log("refreshEnvs1----------->" + envNames);
         for (let i = 0, n = envNames.length; i < n; i++) {
             resp = api.marketplace.jps.Install({ envName: envNames[i], jps: {type: "update", name: "Environment refresh"} });
             if (resp.result != 0) return resp;
         }
-        log("refreshEnvs2----------->" + actions);
         return { result: 0 };
     }
     
