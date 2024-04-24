@@ -81,6 +81,8 @@ function DBRecovery() {
             
         } else {
             if (me.getEvent() && me.getAction()) {
+                log("refreshEnvs1111111->");
+                me.refreshEnvs();
                 return {
                     result: 0,
                     errors: resp.result == FAILED_CLUSTER_CODE ? true : false
@@ -88,7 +90,7 @@ function DBRecovery() {
             }
         }
         if (resp.result != 0) return resp;    
-
+        log("refreshEnvs2222222->");
         me.refreshEnvs();
         
         return {
