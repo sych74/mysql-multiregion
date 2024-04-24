@@ -100,7 +100,7 @@ function DBRecovery() {
     };
 
     me.refreshEnvs = function() {
-        var actions = [], resp;
+        var resp, envNames;
         envNames = me.getEnvNames();
         for (let i = 0, n = envNames.length; i < n; i++) {
             resp = api.marketplace.jps.Install({ envName: envNames[i], jps: {type: "update", name: "Environment refresh"} });
