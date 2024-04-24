@@ -95,6 +95,16 @@ function DBRecovery() {
         };
         
     };
+
+    me.refreshEnvs = function() {
+        envNames = me.getEnvNames();
+        
+        for (let i = 0, n = envNames.length; i < n; i++) {
+            envName = envNames[i]; 
+
+            if (resp.result != 0) return resp;
+        }
+    }
     
     me.defineEnvs = function(envName) {
         
