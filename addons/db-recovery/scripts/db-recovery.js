@@ -104,20 +104,15 @@ function DBRecovery() {
     };
 
     me.refreshEnvs = function() {
-        var actions = [];
+        var actions = [], resp;
         envNames = me.getEnvNames();
         log("refreshEnvs1----------->" + envNames);
         for (let i = 0, n = envNames.length; i < n; i++) {
-            actions.push({
-                envName: envNames[i],
-                jps: {
-                    type: "update",
-                    name: "Environment refresh"
-                }
-            });
+            resp = api.marketplace.jps.Install({ envName: envNames[i], jps: {type: "update", name: "Environment refresh"} });
+            if (resp.result != 0) return resp;
         }
         log("refreshEnvs2----------->" + actions);
-        return { result: 0, onAfterReturn: { 'marketplace.jps.install': actions } };
+        return { result: 0 };
     }
     
     me.defineEnvs = function(envName) {
