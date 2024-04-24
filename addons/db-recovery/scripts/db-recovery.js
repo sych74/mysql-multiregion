@@ -115,7 +115,7 @@ function DBRecovery() {
                 }
             });
         }
-        log("refreshEnvs----------->");
+        log("refreshEnvs----------->", actions);
         return { result: 0, onAfterReturn: { 'marketplace.jps.install': actions } };
     }
     
