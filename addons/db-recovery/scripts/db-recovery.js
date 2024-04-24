@@ -45,6 +45,9 @@ function DBRecovery() {
         
         resp = me.parseResponse(resp.responses);
         if (resp.result == UNABLE_RESTORE_CODE || resp.result == MYISAM_ERROR) return resp;
+
+        log("refreshEnvs000000->");
+        me.refreshEnvs();
         
         if (isRestore) {
             let failedPrimaries = me.getFailedPrimaries();
