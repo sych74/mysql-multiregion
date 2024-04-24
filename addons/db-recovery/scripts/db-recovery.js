@@ -107,7 +107,6 @@ function DBRecovery() {
         var actions = [];
         envNames = me.getEnvNames();
         for (let i = 0, n = envNames.length; i < n; i++) {
-            envName = envNames[i];
             actions.push({
                 envName: envNames[i],
                 jps: {
@@ -116,6 +115,7 @@ function DBRecovery() {
                 }
             });
         }
+        log("refreshEnvs----------->");
         return { result: 0, onAfterReturn: { 'marketplace.jps.install': actions } };
     }
     
