@@ -88,7 +88,7 @@ function DBRecovery() {
             }
         }
         if (resp.result != 0) return resp;    
-        
+
         return {
             result: !isRestore ? 200 : RESTORE_SUCCESS,
             type: SUCCESS
