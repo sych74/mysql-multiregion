@@ -45,9 +45,6 @@ function DBRecovery() {
         
         resp = me.parseResponse(resp.responses);
         if (resp.result == UNABLE_RESTORE_CODE || resp.result == MYISAM_ERROR) return resp;
-
-        resp = me.refreshEnvs();
-        if (resp.result != 0) return resp;
         
         if (isRestore) {
             let failedPrimaries = me.getFailedPrimaries();
@@ -98,16 +95,6 @@ function DBRecovery() {
         };
         
     };
-
-    me.refreshEnvs = function() {
-        var resp, envNames;
-        envNames = me.getEnvNames();
-        for (let i = 0, n = envNames.length; i < n; i++) {
-            resp = api.marketplace.jps.Install({ envName: envNames[i], jps: {type: "update", name: "Environment refresh"} });
-            if (resp.result != 0) return resp;
-        }
-        return { result: 0 };
-    }
     
     me.defineEnvs = function(envName) {
         
